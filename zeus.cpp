@@ -1,10 +1,8 @@
-// Carrega a biblioteca SD
-#include <SD.h>
+//criando arquivos sem charset
+#include <SdFat.h>
+SdFat sdCard;
 
-Sd2Card SDcard;
-SdVolume volume;
-
-// Pino do Arduino conectado ao pino CS do modulo
+// Pino ligado ao CS do modulo
 const int chipSelect = 4;
 
 //Carrega as bibliotecas do Sensor
@@ -39,7 +37,7 @@ char outBuf[128];
 char outCount;
 
 // Nome do Arquivo
-String fileName = String(".log");
+String fileName = String(".txt");
 char fileNameChar[13];
 
 File zeusFile;
@@ -52,12 +50,7 @@ void setup()
 
   pinMode(A5, INPUT);
   // Inicializa o modulo SD
-  if (!SD.begin(chipSelect)) 
-  {
-    Serial.println("Falha ao acessar o cartao !");
-    Serial.println("Verifique o cartao/conexoes e reinicie o Arduino...");
-    return;
-  }
+  if (!sdCard.begin(chipSelect, SPI_HALF_SPEED))sdCard.initErrorHalt();
 
   Ethernet.begin(mac, ip, gateway, gateway, subnet);
   digitalWrite(10, HIGH);
@@ -82,13 +75,15 @@ void loop()
 byte doFTP()
 {
   //zeusFile.close();
-  fileName = String(".log");
+  fileName = String(".txt");
   fileName = millis() + fileName;
-  //fileName.toCharArray(fileNameChar, 13);
+  fileName.toCharArray(fileNameChar, 13);
 
-  zeusFile = SD.open(fileName, FILE_WRITE);
-
-  if (zeusFile)
+  if (!zeusFile.open(fileNameChar, O_RDWR | O_CREAT | O_AT_END))
+  {
+    sdCard.errorHalt("Erro na criação do arquivo");
+  }
+  else
   {
     zeusFile.print("datetime");
     zeusFile.print(",0001");
@@ -115,13 +110,6 @@ byte doFTP()
 
     Serial.println("Arquivo criado com Sucesso!");
   }
-  else
-  {
-    // Mensagem de erro caso ocorra algum problema
-    // na abertura do arquivo
-    Serial.println("Erro ao abrir arquivo.txt !");
-  }
-
 
   //zeusFile.open(fileNameChar, O_RDWR | O_CREAT | O_AT_END);
   //myFile = SD.open(fileName, FILE_READ);
@@ -209,14 +197,14 @@ byte doFTP()
 
   //while (zeusFile.available())
   //{
-  clientBuf[clientCount] = zeusFile.read();
-  clientCount++;
+    clientBuf[clientCount] = zeusFile.read();
+    clientCount++;
 
-  if (clientCount > 63)
-  {
-    dclient.write(clientBuf, 64);
-    clientCount = 0;
-  }
+    if (clientCount > 63)
+    {
+      dclient.write(clientBuf, 64);
+      clientCount = 0;
+    }
   //}
 
   if (clientCount > 0) dclient.write(clientBuf, clientCount);
