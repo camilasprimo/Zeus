@@ -1,7 +1,10 @@
-#include <SdFat.h>
-SdFat sdCard;
+// Carrega a biblioteca SD
+#include <SD.h>
 
-// Pino ligado ao CS do modulo
+Sd2Card SDcard;
+SdVolume volume;
+
+// Pino do Arduino conectado ao pino CS do modulo
 const int chipSelect = 4;
 
 //Carrega as bibliotecas do Sensor
@@ -36,7 +39,7 @@ char outBuf[128];
 char outCount;
 
 // Nome do Arquivo
-String fileName = String(".txt");
+String fileName = String(".log");
 char fileNameChar[13];
 
 File zeusFile;
@@ -49,7 +52,12 @@ void setup()
 
   pinMode(A5, INPUT);
   // Inicializa o modulo SD
-  if (!sdCard.begin(chipSelect, SPI_HALF_SPEED))sdCard.initErrorHalt();
+  if (!SD.begin(chipSelect)) 
+  {
+    Serial.println("Falha ao acessar o cartao !");
+    Serial.println("Verifique o cartao/conexoes e reinicie o Arduino...");
+    return;
+  }
 
   Ethernet.begin(mac, ip, gateway, gateway, subnet);
   digitalWrite(10, HIGH);
@@ -73,16 +81,14 @@ void loop()
 
 byte doFTP()
 {
-
-  fileName = String(".txt");
+  //zeusFile.close();
+  fileName = String(".log");
   fileName = millis() + fileName;
-  fileName.toCharArray(fileNameChar, 13);
+  //fileName.toCharArray(fileNameChar, 13);
 
-  if (!zeusFile.open(fileNameChar, O_RDWR | O_CREAT | O_AT_END))
-  {
-    sdCard.errorHalt("Erro na abertura do arquivo");
-  }
-  else
+  zeusFile = SD.open(fileName, FILE_WRITE);
+
+  if (zeusFile)
   {
     zeusFile.print("datetime");
     zeusFile.print(",0001");
@@ -103,9 +109,19 @@ byte doFTP()
     zeusFile.println(Irms * rede);
 
     // flush the file:
-    zeusFile.flush();
+    //zeusFile.flush();
+    zeusFile.close();
+    //zeusFile.remove();
+
     Serial.println("Arquivo criado com Sucesso!");
   }
+  else
+  {
+    // Mensagem de erro caso ocorra algum problema
+    // na abertura do arquivo
+    Serial.println("Erro ao abrir arquivo.txt !");
+  }
+
 
   //zeusFile.open(fileNameChar, O_RDWR | O_CREAT | O_AT_END);
   //myFile = SD.open(fileName, FILE_READ);
@@ -149,7 +165,6 @@ byte doFTP()
     if (tStr == NULL)
     {
       Serial.println(F("Bad PASV Answer"));
-
     }
   }
 
@@ -192,17 +207,17 @@ byte doFTP()
   byte clientBuf[64];
   int clientCount = 0;
 
-  while (zeusFile.available())
-  {
-    clientBuf[clientCount] = zeusFile.read();
-    clientCount++;
+  //while (zeusFile.available())
+  //{
+  clientBuf[clientCount] = zeusFile.read();
+  clientCount++;
 
-    if (clientCount > 63)
-    {
-      dclient.write(clientBuf, 64);
-      clientCount = 0;
-    }
+  if (clientCount > 63)
+  {
+    dclient.write(clientBuf, 64);
+    clientCount = 0;
   }
+  //}
 
   if (clientCount > 0) dclient.write(clientBuf, clientCount);
 
@@ -285,9 +300,6 @@ void efail()
   client.stop();
   Serial.println(F("Command disconnected"));
 
-  zeusFile.remove();
-  zeusFile.close();
-  zeusFile.flush();
 
   Serial.println(F("Arquivo deletado!"));
 }
