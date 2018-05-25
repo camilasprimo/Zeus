@@ -54,20 +54,19 @@ void setup()
   digitalWrite(10, HIGH);
   delay(2000);
 
-  Serial.println(F("digite 'a' para iniciar"));
+  //Serial.println(F("digite 'a' para iniciar"));
 }
 
 void loop()
 {
+  //byte inChar;
+  //inChar = Serial.read();
 
-  byte inChar;
-  inChar = Serial.read();
-
-  if (inChar == 'a')
-  {
-    if (doFTP()) Serial.println(F("FTP OK"));
-    else Serial.println(F("FTP FAIL"));
-  }
+  //if (inChar == 'a')
+  //{
+  if (doFTP()) Serial.println(F("FTP OK"));
+  else Serial.println(F("FTP FAIL"));
+  //}
 }
 
 byte doFTP()
@@ -104,7 +103,6 @@ byte doFTP()
     // flush the file:
     sdFile.flush();
     sdFile.close();
-    
 
     Serial.println("Arquivo criado com Sucesso!");
   }
@@ -165,7 +163,7 @@ byte doFTP()
   Serial.println(hiPort);
 
   if (dclient.connect(server, hiPort)) {
-    Serial.println(F("Data connected"));
+    Serial.println(F("Dados conectados"));
   }
   else {
     Serial.println(F("Data connection failed"));
@@ -222,7 +220,7 @@ byte doFTP()
 
 
   dclient.stop();
-  Serial.println(F("Data disconnected"));
+  Serial.println(F("Dados desconectados"));
 
   if (!eRcv()) return 0;
 
@@ -286,7 +284,7 @@ void efail()
   }
 
   client.stop();
-  Serial.println(F("Command disconnected"));
+  Serial.println(F("Cliente FTP Desconectado"));
 
   //ftpFile.flush();
   ftpFile.close();
