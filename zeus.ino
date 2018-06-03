@@ -18,6 +18,13 @@ int pino_sct = 1;
 #include <Ethernet.h>
 #define FTPWRITE
 
+// include the library code:
+#include <LiquidCrystal.h>
+// initialize the library by associating any needed LCD interface pin
+// with the arduino pin number it is connected to
+const int rs = 9, en = 8, d4 = 5, d5 = 6, d6 = 3, d7 = 2;
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+
 // MAC unico
 byte mac[] = { 0x90, 0xA2, 0xDA, 0x00, 0x59, 0x67 };
 
@@ -38,10 +45,10 @@ String fileName = String(".txt");
 char fileNameChar[13];
 
 File sdFile;
-File ftpFile;
+int filecount = 0;
 
-void setup()
-{
+void setup() {
+
   Serial.begin(9600);
   emon1.current(pino_sct, 29);
   digitalWrite(10, HIGH);
@@ -52,29 +59,43 @@ void setup()
 
   Ethernet.begin(mac, ip, gateway, gateway, subnet);
   digitalWrite(10, HIGH);
+
+  // set up the LCD's number of columns and rows:
+  lcd.begin(16, 2);
+  //lcd.clear();
+  lcd.setCursor(0, 0);
+  // Print a message to the LCD.
+  lcd.print("ZEUS Uploading");
+
   delay(2000);
 
-  //Serial.println(F("digite 'a' para iniciar"));
 }
 
-void loop()
-{
-  //byte inChar;
-  //inChar = Serial.read();
+void loop() {
 
-  //if (inChar == 'a')
-  //{
   if (doFTP()) Serial.println(F("FTP OK"));
   else Serial.println(F("FTP FAIL"));
-  //}
+
+  delay(1000);
 }
+
+
 
 byte doFTP()
 {
-  //sdFile.close();
+
+  filecount = filecount + 1;
   fileName = String(".txt");
   fileName = millis() + fileName;
   fileName.toCharArray(fileNameChar, 13);
+
+  //lcd.clear();
+  // set the cursor to column 0, line 1
+  // (note: line 1 is the second row, since counting begins with 0):
+  lcd.setCursor(0, 1);
+  // print the number of seconds since reset:
+  lcd.print(filecount);
+
 
   if (!sdFile.open(fileNameChar, O_RDWR | O_CREAT | O_AT_END))
   {
@@ -107,7 +128,7 @@ byte doFTP()
     Serial.println("Arquivo criado com Sucesso!");
   }
 
-  ftpFile.open(fileNameChar, O_RDONLY);
+  sdFile.open(fileNameChar, O_RDONLY);
   //myFile = SD.open(fileName, FILE_READ);
 
   if (client.connect(server, 21)) {
@@ -192,9 +213,9 @@ byte doFTP()
   byte clientBuf[64];
   int clientCount = 0;
 
-  while (ftpFile.available())
+  while (sdFile.available())
   {
-    clientBuf[clientCount] = ftpFile.read();
+    clientBuf[clientCount] = sdFile.read();
     clientCount++;
 
     if (clientCount > 63)
@@ -212,7 +233,7 @@ byte doFTP()
     while (dclient.available())
     {
       char c = dclient.read();
-      ftpFile.write(c);
+      sdFile.write(c);
       Serial.write(c);
     }
   }
@@ -231,7 +252,7 @@ byte doFTP()
   client.stop();
   Serial.println(F("Command disconnected"));
 
-  ftpFile.close();
+  sdFile.close();
   Serial.println(F("SD closed"));
   return 1;
 }
@@ -286,7 +307,8 @@ void efail()
   client.stop();
   Serial.println(F("Cliente FTP Desconectado"));
 
-  //ftpFile.flush();
-  ftpFile.close();
+  //sdFile.flush();
+  sdFile.close();
   Serial.println(F("Arquivo fechado!"));
 }
+
