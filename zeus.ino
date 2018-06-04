@@ -1,11 +1,9 @@
-//criando arquivos sem charset
+
 #include <SdFat.h>
 SdFat sdCard;
 
-// Pino ligado ao CS do modulo
-const int chipSelect = 4;
+const PROGMEM int chipSelect = 4;
 
-//Carrega as bibliotecas do Sensor
 #include "EmonLib.h"
 EnergyMonitor emon1;
 //Tensao da rede eletrica
@@ -13,16 +11,13 @@ int rede = 110.0;
 //Pino do sensor SCT
 int pino_sct = 1;
 
-//Carrega as bibliotecas do FTP
 #include <SPI.h>
 #include <Ethernet.h>
 #define FTPWRITE
 
-// include the library code:
+// include the library
 #include <LiquidCrystal.h>
-// initialize the library by associating any needed LCD interface pin
-// with the arduino pin number it is connected to
-const int rs = 9, en = 8, d4 = 5, d5 = 6, d6 = 3, d7 = 2;
+const PROGMEM int rs = 9, en = 8, d4 = 5, d5 = 6, d6 = 3, d7 = 2;
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
 // MAC unico
@@ -47,6 +42,8 @@ char fileNameChar[13];
 File sdFile;
 int filecount = 0;
 
+const PROGMEM char ZeusLCD[] = "Zeus Uploading";
+
 void setup() {
 
   Serial.begin(9600);
@@ -65,7 +62,7 @@ void setup() {
   //lcd.clear();
   lcd.setCursor(0, 0);
   // Print a message to the LCD.
-  lcd.print("ZEUS Uploading");
+  lcd.print(ZeusLCD);
 
   delay(2000);
 
@@ -78,7 +75,6 @@ void loop() {
 
   delay(1000);
 }
-
 
 
 byte doFTP()
@@ -99,17 +95,11 @@ byte doFTP()
 
   if (!sdFile.open(fileNameChar, O_RDWR | O_CREAT | O_AT_END))
   {
-    sdCard.errorHalt("Erro na criação do arquivo");
+    sdCard.errorHalt("Error SdCard");
   }
   else
   {
-    sdFile.print("dt");
-    sdFile.print(",0001");
-    sdFile.print(",TRS");
-    sdFile.print(",BRA");
-    sdFile.print(",-23.3645");
-    sdFile.print(",-46.7403");
-    sdFile.print(",TV");
+    sdFile.print("dt,0001,TRS,BRA,-23.3645,-46.7403,TV");
 
     //Calcula a corrente
     double Irms = emon1.calcIrms(1480);
@@ -125,18 +115,18 @@ byte doFTP()
     sdFile.flush();
     sdFile.close();
 
-    Serial.println("Arquivo criado com Sucesso!");
+    Serial.println("Arquivo OK!");
   }
 
   sdFile.open(fileNameChar, O_RDONLY);
   //myFile = SD.open(fileName, FILE_READ);
 
   if (client.connect(server, 21)) {
-    Serial.println(F("Porta conectada"));
+    Serial.println(F("Conn OK"));
   }
   else {
     //sdFile.close();
-    Serial.println(F("Porta com falha"));
+    Serial.println(F("Conn NO OK"));
     return 0;
   }
 
@@ -170,7 +160,7 @@ byte doFTP()
     array_pasv[i] = atoi(tStr);
     if (tStr == NULL)
     {
-      Serial.println(F("Bad PASV Answer"));
+      Serial.println(F("Bad PASS"));
     }
   }
 
@@ -179,15 +169,14 @@ byte doFTP()
   hiPort = array_pasv[4] << 8;
   loPort = array_pasv[5] & 255;
 
-  //Serial.print(F("Data port: "));
   hiPort = hiPort | loPort;
   Serial.println(hiPort);
 
   if (dclient.connect(server, hiPort)) {
-    Serial.println(F("Dados conectados"));
+    Serial.println(F("Data OK"));
   }
   else {
-    Serial.println(F("Data connection failed"));
+    Serial.println(F("Conn failed"));
     client.stop();
     //sdFile.close();
     return 0;
@@ -208,7 +197,6 @@ byte doFTP()
   }
 
 #ifdef FTPWRITE
-  Serial.println(F("Escrevendo no FTP"));
 
   byte clientBuf[64];
   int clientCount = 0;
@@ -241,7 +229,7 @@ byte doFTP()
 
 
   dclient.stop();
-  Serial.println(F("Dados desconectados"));
+  //Serial.println(F("Data OK"));
 
   if (!eRcv()) return 0;
 
@@ -250,10 +238,10 @@ byte doFTP()
   if (!eRcv()) return 0;
 
   client.stop();
-  Serial.println(F("Command disconnected"));
+  //Serial.println(F("Command OK"));
 
   sdFile.close();
-  Serial.println(F("SD closed"));
+  //Serial.println(F("SD closed"));
   return 1;
 }
 
@@ -305,10 +293,10 @@ void efail()
   }
 
   client.stop();
-  Serial.println(F("Cliente FTP Desconectado"));
+  Serial.println(F("FTP Closed"));
 
   //sdFile.flush();
   sdFile.close();
-  Serial.println(F("Arquivo fechado!"));
+  Serial.println(F("File Closed!"));
 }
 
