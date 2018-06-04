@@ -42,8 +42,6 @@ char fileNameChar[13];
 File sdFile;
 int filecount = 0;
 
-const PROGMEM char ZeusLCD[] = "Zeus Uploading";
-
 void setup() 
 {
   Serial.begin(9600);
@@ -62,7 +60,7 @@ void setup()
   //lcd.clear();
   lcd.setCursor(0, 0);
   // Print a message to the LCD.
-  lcd.print(ZeusLCD);
+  lcd.print("File:");
 
   delay(2000);
 }
@@ -114,8 +112,7 @@ byte doFTP()
   }
 
   sdFile.open(fileNameChar, O_RDONLY);
-  //myFile = SD.open(fileName, FILE_READ);
-
+  
   if (client.connect(server, 21)) {
     Serial.println(F("Conn OK"));
   }
@@ -292,4 +289,3 @@ void efail()
   sdFile.close();
   Serial.println(F("File Closed!"));
 }
-
