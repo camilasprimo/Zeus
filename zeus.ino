@@ -44,8 +44,8 @@ int filecount = 0;
 
 const PROGMEM char ZeusLCD[] = "Zeus Uploading";
 
-void setup() {
-
+void setup() 
+{
   Serial.begin(9600);
   emon1.current(pino_sct, 29);
   digitalWrite(10, HIGH);
@@ -65,33 +65,28 @@ void setup() {
   lcd.print(ZeusLCD);
 
   delay(2000);
-
 }
 
-void loop() {
-
+void loop() 
+{
   if (doFTP()) Serial.println(F("FTP OK"));
   else Serial.println(F("FTP FAIL"));
 
   delay(1000);
 }
 
-
 byte doFTP()
 {
-
   filecount = filecount + 1;
   fileName = String(".txt");
   fileName = millis() + fileName;
   fileName.toCharArray(fileNameChar, 13);
 
   //lcd.clear();
-  // set the cursor to column 0, line 1
-  // (note: line 1 is the second row, since counting begins with 0):
+  // set the cursor to column 0, line 1 - (note: line 1 is the second row, since counting begins with 0):
   lcd.setCursor(0, 1);
   // print the number of seconds since reset:
   lcd.print(filecount);
-
 
   if (!sdFile.open(fileNameChar, O_RDWR | O_CREAT | O_AT_END))
   {
@@ -151,7 +146,6 @@ byte doFTP()
   client.println(F("PASV"));
 
   if (!eRcv()) return 0;
-
 
   char *tStr = strtok(outBuf, "(,");
   int array_pasv[6];
@@ -226,7 +220,6 @@ byte doFTP()
     }
   }
 #endif
-
 
   dclient.stop();
   //Serial.println(F("Data OK"));
