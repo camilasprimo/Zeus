@@ -1,0 +1,86 @@
+https://cp1.awardspace.net/beta/login/?next=ftp-manager&notice=login
+
+ftp://2729001_thiago@f21-preview.awardspace.net
+2729001_thiago
+zeus_2018
+
+//2018-05-18 09:48:54  Corrente : 0.03 Potencia : 3.25
+
+//https://pt.wikipedia.org/wiki/ISO_3166-1_alfa-3
+
+//http://pt.db-city.com/Brasil--S%C3%A3o-Paulo--Caieiras
+
+
+${now():toNumber()}
+
+{  
+   "timestamp":1520535925741,
+   "created_time":"2018-05-18",
+   "user_id":0001,
+   "user_name":"Thiago Santiago",
+   "country":"BRA",
+   "latitude":"-23.3645",
+   "longitude":"-46.7403"
+   "device":"TV",
+   "corrente":"TV",
+   "potencia":"TV"   
+}
+
+
+//{"timestamp":${now():toNumber()},"created_time":"${created_time:substring(0,19)}","user_id":"${user_id}","user_name":"${user_name}","country":"${country}","latitude":"${latitude}","longitude":"${longitude}","device":"${device}","corrente":"${corrente}","potencia":"${potencia}"}
+//{"timestamp":${now():toNumber()},"created_time":"${now()}","user_id":"${user_id}","user_name":"${user_name}","country":"${country}","latitude":"${latitude}","longitude":"${longitude}","device":"${device}","corrente":"${corrente}","potencia":"${potencia}"}
+
+{"timestamp":${now():toNumber()},"created_time":"${now():format("yyyy/MM/dd", "GMT")}","user_id":"${user_id}","user_name":"${user_name}","country":"${country}","latitude":"${latitude}","longitude":"${longitude}","device":"${device}","corrente":"${corrente}","potencia":"${potencia}"}
+
+
+timestamp,created_time,user_id,user_name,country,latitude,longitude,device,corrente,potencia
+
+
+
+Endereco IP4: 192.168.0.101
+Mascara SubRede: 255.255.255.0
+Roteador: 192.168.0.1
+
+
+
+Endereco IP4   : 192,168,0,111
+Roteador       : 192,168,0,1
+Mascara SubRede: 255,255,255,0
+
+
+//Definicoes de IP, mascara de rede e gateway
+byte mac[] = {
+  0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
+IPAddress ip(192,168,0,111);        //Define o endereco IP
+IPAddress gateway(192,168,0,1);	    //Define o gateway
+IPAddress subnet(255, 255, 255, 0); //Define a máscara de rede
+
+
+
+
+
+
+
+
+ "created_at":"Thu Apr 06 15:24:15 +0000 2017",
+
+${now():format("E MMM dd HH:mm:ss z yyyy", "UTC")}
+
+
+{"timestamp":1527608870410,"created_time":"2018/05/29","user_id":"0001","user_name":"Thiago Santiago","country":"BRA","latitude":"-23.3645","longitude":"-46.7403","device":"TV","corrente":"0.04","potencia":"4.74"}
+
+
+
+http://ec2-13-56-149-164.us-west-1.compute.amazonaws.com:8983/solr/zeus/update?stream.body=%3Cdelete%3E%3Cquery%3E*:*%3C/query%3E%3C/delete%3E&commit=true
+https://raw.githubusercontent.com/abajwa-hw/ambari-nifi-service/master/screenshots/Solr-query.png
+
+
+
+
+
+
+
+
+
+
+
