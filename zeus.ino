@@ -1,4 +1,3 @@
-
 #include <SdFat.h>
 SdFat sdCard;
 
@@ -92,7 +91,8 @@ byte doFTP()
   }
   else
   {
-    sdFile.print("dt,0001,TRS,BRA,-23.3645,-46.7403,TV");
+    //UserID,DispositivoID
+    sdFile.print("0001,0001");
 
     //Calcula a corrente
     double Irms = emon1.calcIrms(1480);
