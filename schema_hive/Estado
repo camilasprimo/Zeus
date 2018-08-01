@@ -1,5 +1,5 @@
     
-DROP TABLE Estado; 
+DROP TABLE IF EXISTS Estado; 
 
 CREATE EXTERNAL TABLE IF NOT EXISTS Estado(
         id BIGINT,
