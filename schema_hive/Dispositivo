@@ -1,0 +1,11 @@
+    
+DROP TABLE Dispositivo; 
+
+CREATE EXTERNAL TABLE IF NOT EXISTS Dispositivo(
+        id BIGINT,
+	id_usuario INT,
+	id_cidade INT,
+        nome STRING,       
+        descricao STRING)
+    ROW FORMAT DELIMITED FIELDS TERMINATED BY '|'
+	STORED AS TEXTFILE location '/user/admin/Zeus/Dispositivo';

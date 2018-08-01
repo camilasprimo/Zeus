@@ -1,0 +1,13 @@
+    
+DROP TABLE Energia; 
+
+CREATE EXTERNAL TABLE IF NOT EXISTS Energia(
+        id BIGINT,
+        timestamp STRING,
+        created_time STRING,
+        user_id INT,
+        dispositivo_id INT,
+        potencia DOUBLE,
+        corrente DOUBLE)
+    ROW FORMAT DELIMITED FIELDS TERMINATED BY '|'
+	STORED AS TEXTFILE location '/user/admin/Zeus/Energia';

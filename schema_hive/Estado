@@ -1,0 +1,8 @@
+    
+DROP TABLE Estado; 
+
+CREATE EXTERNAL TABLE IF NOT EXISTS Estado(
+        id BIGINT,
+	nome STRING)
+    ROW FORMAT DELIMITED FIELDS TERMINATED BY '|'
+	STORED AS TEXTFILE location '/user/admin/Zeus/Estado';
