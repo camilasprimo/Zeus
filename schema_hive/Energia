@@ -1,9 +1,7 @@
-    
-DROP TABLE Energia; 
+DROP TABLE IF EXISTS Energia; 
 
 CREATE EXTERNAL TABLE IF NOT EXISTS Energia(
         id BIGINT,
-        timestamp STRING,
         created_time STRING,
         user_id INT,
         dispositivo_id INT,
