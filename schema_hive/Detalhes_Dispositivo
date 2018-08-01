@@ -1,9 +1,8 @@
-    
-DROP TABLE Detalhes_Dispositivo; 
+DROP TABLE IF EXISTS Detalhes_Dispositivo; 
 
 CREATE EXTERNAL TABLE IF NOT EXISTS Detalhes_Dispositivo(
-        id_dispositivo INT,
+    id_dispositivo INT,
 	consumo_inmetro STRING,
-	consumo_inmetro STRING)
-    ROW FORMAT DELIMITED FIELDS TERMINATED BY '|'
-	STORED AS TEXTFILE location '/user/admin/Zeus/Detalhes_Dispositivo';
+	classificacao_inmetro STRING)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '|'
+STORED AS TEXTFILE location '/user/admin/Zeus/Detalhes_Dispositivo';
