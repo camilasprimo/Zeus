@@ -1,0 +1,15 @@
+    
+DROP TABLE Clima; 
+
+CREATE EXTERNAL TABLE IF NOT EXISTS Clima(
+        id BIGINT,
+        id_cidade INT,
+        datatemp STRING,
+        maxtemp DOUBLE,
+        mintemp DOUBLE,
+        avgtemp DOUBLE,
+        totalprecip_mm DOUBLE,
+        porsol STRING,
+        nascersol STRING)
+    ROW FORMAT DELIMITED FIELDS TERMINATED BY '|'
+	STORED AS TEXTFILE location '/user/admin/Zeus/Clima';
