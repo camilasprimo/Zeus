@@ -1,0 +1,10 @@
+    
+DROP TABLE Usuario; 
+
+CREATE EXTERNAL TABLE IF NOT EXISTS Usuario(
+        id BIGINT,
+        nome_usuario STRING,       
+        email STRING,
+        senha STRING)
+    ROW FORMAT DELIMITED FIELDS TERMINATED BY '|'
+	STORED AS TEXTFILE location '/user/admin/Zeus/Usuario';

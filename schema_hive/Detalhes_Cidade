@@ -1,0 +1,11 @@
+    
+DROP TABLE Detalhes_Cidade; 
+
+CREATE EXTERNAL TABLE IF NOT EXISTS Cidade(
+        id_cidade INT,
+	codigo_cidade_ibge INT,
+	populacao INT,
+	pib DOUBLE
+	idh DOUBLE)
+    ROW FORMAT DELIMITED FIELDS TERMINATED BY '|'
+	STORED AS TEXTFILE location '/user/admin/Zeus/Detalhes_Cidade';
