@@ -1,0 +1,7 @@
+
+
+
+ssh -i "/Users/tsantiago/Downloads/hdf_demo_thiago.pem" centos@ec2-13-57-48-160.us-west-1.compute.amazonaws.com
+
+scp -i "/Users/tsantiago/Downloads/hdf_demo_thiago.pem" nifi-druid.nar centos@ec2-13-57-236-246.us-west-1.compute.amazonaws.com:/tmp
+
