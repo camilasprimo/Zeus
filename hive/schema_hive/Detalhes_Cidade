@@ -1,7 +1,7 @@
     
 DROP TABLE IF EXISTS Detalhes_Cidade; 
 
-CREATE EXTERNAL TABLE IF NOT EXISTS Cidade(
+CREATE EXTERNAL TABLE IF NOT EXISTS Detalhes_Cidade(
         id_cidade INT,
 	codigo_cidade_ibge INT,
 	populacao INT,
