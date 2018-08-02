@@ -1,12 +1,7 @@
 # ZEUS
-<<<<<<< HEAD
-# # MONITORAMENTO DO CONSUMO DE ENERGIA ELÉTRICA # #
-<img src="https://www.brandcrowd.com/gallery/brands/pictures/picture12371854532127.png" title="Zeus" alt="Zeus">
-=======
-<center><img src="https://www.brandcrowd.com/gallery/brands/pictures/picture12371854532127.png" title="Zeus" alt="Zeus"></center>
 
-** MONITORAMENTO DO CONSUMO DE ENERGIA ELÉTRICA **
->>>>>>> 650c01e455753e3f7cd2c139507c4efbb108a261
+### MONITORAMENTO DO CONSUMO DE ENERGIA ELÉTRICA
+<img src="https://www.brandcrowd.com/gallery/brands/pictures/picture12371854532127.png" title="Zeus" alt="Zeus">
 
 O objetivo desse projeto é monitorar o consumo de energia, utilizando ferramentas 100% open source com uma solução utilizando Big Data e Internet das Coisas.  
 
