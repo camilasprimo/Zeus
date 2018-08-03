@@ -1,0 +1,45 @@
+
+
+${now():toNumber()}
+
+{  
+   "timestamp":1520535925741,
+   "created_time":"2018-05-18",
+   "user_id":0001,
+   "user_name":"Thiago Santiago",
+   "country":"BRA",
+   "latitude":"-23.3645",
+   "longitude":"-46.7403"
+   "device":"TV",
+   "corrente":"TV",
+   "potencia":"TV"   
+}
+
+
+
+timestamp,created_time,user_id,user_name,country,latitude,longitude,device,corrente,potencia
+
+
+
+ "created_at":"Thu Apr 06 15:24:15 +0000 2017",
+
+${now():format("E MMM dd HH:mm:ss z yyyy", "UTC")}
+
+
+{"timestamp":1527608870410,"created_time":"2018/05/29","user_id":"0001","user_name":"Thiago Santiago","country":"BRA","latitude":"-23.3645","longitude":"-46.7403","device":"TV","corrente":"0.04","potencia":"4.74"}
+
+
+
+http://ec2-13-56-149-164.us-west-1.compute.amazonaws.com:8983/solr/zeus/update?stream.body=%3Cdelete%3E%3Cquery%3E*:*%3C/query%3E%3C/delete%3E&commit=true
+https://raw.githubusercontent.com/abajwa-hw/ambari-nifi-service/master/screenshots/Solr-query.png
+
+
+
+
+
+
+
+
+
+
+

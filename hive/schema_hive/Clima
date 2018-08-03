@@ -1,7 +1,7 @@
     
-DROP TABLE Clima; 
+    DROP TABLE IF EXISTS Clima; 
 
-CREATE EXTERNAL TABLE IF NOT EXISTS Clima(
+    CREATE EXTERNAL TABLE IF NOT EXISTS Clima(
         id BIGINT,
         id_cidade INT,
         datatemp STRING,
@@ -12,4 +12,4 @@ CREATE EXTERNAL TABLE IF NOT EXISTS Clima(
         porsol STRING,
         nascersol STRING)
     ROW FORMAT DELIMITED FIELDS TERMINATED BY '|'
-	STORED AS TEXTFILE location '/user/admin/Zeus/Clima';
+    STORED AS TEXTFILE location '/user/admin/Zeus/Clima';

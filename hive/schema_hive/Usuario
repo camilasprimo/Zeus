@@ -1,5 +1,5 @@
     
-DROP TABLE Usuario; 
+DROP TABLE IF EXISTS Usuario; 
 
 CREATE EXTERNAL TABLE IF NOT EXISTS Usuario(
         id BIGINT,

@@ -1,0 +1,10 @@
+DROP TABLE IF EXISTS Cidade; 
+
+CREATE EXTERNAL TABLE IF NOT EXISTS Cidade(
+   id BIGINT,
+   nome STRING,
+   id_estado INT,
+	latitude DOUBLE,
+	longitude DOUBLE)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '|'
+STORED AS TEXTFILE location '/user/admin/Zeus/Cidade';
