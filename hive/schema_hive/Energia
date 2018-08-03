@@ -5,7 +5,7 @@ CREATE EXTERNAL TABLE IF NOT EXISTS Energia(
         created_time STRING,
         user_id INT,
         dispositivo_id INT,
-        potencia DOUBLE,
-        corrente DOUBLE)
+        corrente DOUBLE,
+        potencia DOUBLE)
     ROW FORMAT DELIMITED FIELDS TERMINATED BY '|'
 	STORED AS TEXTFILE location '/user/admin/Zeus/Energia';
