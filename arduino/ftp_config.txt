@@ -1,8 +1,22 @@
 https://cp1.awardspace.net/beta/login/?next=ftp-manager&notice=login
 
 ftp://2729001_thiago@f21-preview.awardspace.net
+
+user0001
 2729001_thiago
 zeus_2018
+
+f20-preview.awardspace.net
+user0002
+2793234_leandro
+zeus_2018
+
+f20-preview.awardspace.net
+user0003
+2793236_camila
+zeus_2018
+
+
 
 //2018-05-18 09:48:54  Corrente : 0.03 Potencia : 3.25
 
